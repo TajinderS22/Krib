@@ -1,12 +1,19 @@
-import { Text, View } from "react-native";
-import "../global.css"
-
+import { useAuth } from "@clerk/expo";
+import { Redirect } from "expo-router";
 
 export default function Index() {
+
+  const { isSignedIn, isLoaded } = useAuth()
+
+  if (!isLoaded) {
+    return null
+  }
+
+  if (!isSignedIn) {
+    return <Redirect href="./(auth)/sign-up" />
+  }
+
   return (
-    <View
-      className="bg-green-200"
-    >
-    </View>
+    <Redirect href={"/(root)/(tabs)"} />
   );
 }
